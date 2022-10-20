@@ -1,0 +1,27 @@
+Description: Use the regular jar Atn yask instead of jarjar. jarjar is used
+ upstream to relocate the jaxen classes inside the xom jar, but we prefer
+ to keep it separate in Debian.
+Author: Emmanuel Bourg <ebourg@apache.org>
+Forwarded: not-needed
+--- a/build.xml
++++ b/build.xml
+@@ -317,9 +317,7 @@
+ 
+ 
+   <target name="jar" depends="compile" description="Create xom.jar">
+-  	<taskdef name="jarjar" classname="com.tonicsystems.jarjar.JarJarTask"
+-  	        classpath="${lib.dir}/jarjar-1.0.jar"/>
+-    <jarjar jarfile="${build.dir}/${name}-${version}.jar"
++    <jar jarfile="${build.dir}/${name}-${version}.jar"
+          basedir="${build.dest}"
+          index="no"
+ 		 compress="yes"
+@@ -378,7 +376,7 @@
+           <attribute name="Implementation-Title"  value="nu.xom.canonical"/>
+         </section>
+       </manifest>
+-    </jarjar>
++    </jar>
+   	
+   	<!-- Put a copy in the dist dir too, because I never remember to upload 
+   	     the jar from the build directory. -->

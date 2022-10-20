@@ -1,0 +1,13 @@
+Description: Add compile15 to compile-core depends
+Author: Varun Hiremath <varun@debian.org>
+--- a/build.xml
++++ b/build.xml
+@@ -209,7 +209,7 @@
+   </target>
+ 
+ 
+-  <target name="compile-core" depends="prepare"
++  <target name="compile-core" depends="prepare, compile15"
+           description="Compile the source code">
+     <javac srcdir="${build.src}"
+            destdir="${build.dest}"

@@ -1,0 +1,76 @@
+Source: xom
+Section: java
+Priority: optional
+Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.org>
+Uploaders:
+ Stephan Michels <stephan@apache.org>,
+ Varun Hiremath <varun@debian.org>,
+ Emmanuel Bourg <ebourg@apache.org>,
+Build-Depends:
+ cdbs,
+ debhelper (>= 5),
+ maven-repo-helper,
+Build-Depends-Indep:
+ ant,
+ default-jdk,
+ junit (>= 3.8.1),
+ libjaxen-java (>= 1.1),
+ libxalan2-java,
+ libxerces2-java,
+Standards-Version: 3.9.4
+Vcs-Git: https://salsa.debian.org/java-team/xom.git
+Vcs-Browser: https://salsa.debian.org/java-team/xom
+Homepage: http://www.xom.nu
+
+Package: libxom-java
+Architecture: all
+Suggests:
+ libxom-java-doc,
+Depends:
+ libjaxen-java (>= 1.1~beta8),
+ libxerces2-java,
+ ${misc:Depends},
+Description: New XML object model for Java
+ XOM(tm) is a new XML object model. It is an open source (LGPL),
+ tree-based API for processing XML with Java that strives for correctness,
+ simplicity, and performance, in that order.
+ .
+ XOM is designed to be easy to learn and easy to use. It works very
+ straight-forwardly, and has a very shallow learning curve. Assuming
+ you're already familiar with XML, you should be able to get up and
+ running with XOM very quickly.
+ .
+ XOM is the only XML API that makes no compromises on correctness.
+ XOM only accepts namespace well-formed XML documents, and only allows
+ you to create namespace well-formed XML documents. (In fact, it's a
+ little stricter than that: it actually guarantees that all documents
+ are round-trippable and have well-defined XML infosets.) XOM manages
+ your XML so you don't have to. With XOM, you can focus on the unique
+ value of your application, and trust XOM to get the XML right.
+
+Package: libxom-java-doc
+Architecture: all
+Section: doc
+Depends:
+ ${misc:Depends},
+Suggests:
+ libxom-java,
+Description: Documentation for the libxom-java package
+ XOM(tm) is a new XML object model. It is an open source (LGPL),
+ tree-based API for processing XML with Java that strives for correctness,
+ simplicity, and performance, in that order.
+ .
+ XOM is designed to be easy to learn and easy to use. It works very
+ straight-forwardly, and has a very shallow learning curve. Assuming
+ you're already familiar with XML, you should be able to get up and
+ running with XOM very quickly.
+ .
+ XOM is the only XML API that makes no compromises on correctness.
+ XOM only accepts namespace well-formed XML documents, and only allows
+ you to create namespace well-formed XML documents. (In fact, it's a
+ little stricter than that: it actually guarantees that all documents
+ are round-trippable and have well-defined XML infosets.) XOM manages
+ your XML so you don't have to. With XOM, you can focus on the unique
+ value of your application, and trust XOM to get the XML right.
+ .
+ This package includes the API documentation for libxom-java package.

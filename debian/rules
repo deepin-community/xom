@@ -1,0 +1,37 @@
+#!/usr/bin/make -f
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/ant.mk
+
+JAVA_HOME		:= /usr/lib/jvm/default-java
+DEB_JARS		:= xercesImpl xalan xml-apis jaxen saxpath junit
+DEB_ANT_BUILD_TARGET	:= jar samples javadoc
+PACKAGE                 := xom
+MAVEN_REPO              := http://repo1.maven.org/maven2
+
+clean::
+	-find -name '*.class' | xargs $(RM)
+	-rm build/xom-samples-$(DEB_UPSTREAM_VERSION).jar
+	mh_clean
+
+install/libxom-java:: 
+	mh_installpoms -plib$(PACKAGE)-java
+	mh_installjar -plib$(PACKAGE)-java -l debian/poms/$(PACKAGE).pom build/$(PACKAGE)-$(DEB_UPSTREAM_VERSION).jar 
+
+install/libxom-java-doc::
+	cp build/xom-samples.jar build/xom-samples-$(DEB_UPSTREAM_VERSION).jar
+	dh_install -plibxom-java-doc build/xom-samples-$(DEB_UPSTREAM_VERSION).jar /usr/share/java/
+	#dh_link -plibxom-java-doc /usr/share/java/xom-samples-$(DEB_UPSTREAM_VERSION).jar /usr/share/java/xom-samples.jar
+	dh_installdocs -plibxom-java-doc build/apidocs
+
+get-orig-source:
+	-uscan --upstream-version 0 --rename	
+
+get-orig-pom:
+	mkdir -p debian/poms
+	wget  -U NoSuchBrowser/1.0 -O debian/poms/$(PACKAGE).pom \
+		$(MAVEN_REPO)/xom/$(PACKAGE)/$(DEB_UPSTREAM_VERSION)/$(PACKAGE)-$(DEB_UPSTREAM_VERSION).pom
+
+
+
+DEB_PHONY_RULES += get-orig-source get-orig-pom

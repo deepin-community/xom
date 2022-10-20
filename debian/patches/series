@@ -1,0 +1,6 @@
+0001-Remove-jaxen-from-build.patch
+0002-Remove-a-directory-during-cleaning.patch
+0003-Add-compile15-to-compile-core-depends.patch
+0005-Remove-external-links.patch
+0006-Compile-with-ant-runtime.patch
+0007-Remove-jarjar.patch
