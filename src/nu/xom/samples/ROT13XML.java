@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.samples;
@@ -60,7 +60,7 @@ public class ROT13XML {
   
     public static String rot13(String s) {
     
-        StringBuffer out = new StringBuffer(s.length());
+    	StringBuilder out = new StringBuilder(s.length());
         for (int i = 0; i < s.length(); i++) {
           int c = s.charAt(i);
           if (c >= 'A' && c <= 'M') out.append((char) (c+13));

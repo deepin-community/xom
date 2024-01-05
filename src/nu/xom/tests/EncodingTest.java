@@ -1,4 +1,4 @@
-/* Copyright 2002-2005 Elliotte Rusty Harold
+/* Copyright 2002-2005, 2018 Elliotte Rusty Harold
    
    This library is free software; you can redistribute it and/or modify
    it under the terms of version 2.1 of the GNU Lesser General Public 
@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.tests;
@@ -25,7 +25,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.UnsupportedCharsetException;
 
 import nu.xom.Attribute;
 import nu.xom.Builder;
@@ -41,7 +42,7 @@ import nu.xom.Serializer;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.1a2
+ * @version 1.2.11
  *
  */
 public class EncodingTest extends XOMTestCase {
@@ -80,7 +81,7 @@ public class EncodingTest extends XOMTestCase {
         // Test Plane-1 characters. These are tricky because Java 
         // strings encode them as surrogate pairs. We'll test with
         // the characters from 1D100 to 1D1FF (the musical symbols)
-        StringBuffer sb = new StringBuffer(2);
+        StringBuilder sb = new StringBuilder(2);
         char high = 0xD834;
         sb.append(high);
         for (int i = 0; i < 256; i++) {
@@ -114,7 +115,7 @@ public class EncodingTest extends XOMTestCase {
 
 
     public void testISO2022JP() throws ParsingException, IOException {
-        checkAll("ISO-2022-JP");
+         if (charsetAvailable("ISO-2022-JP")) checkAll("ISO-2022-JP");
     } 
 
 
@@ -252,15 +253,12 @@ public class EncodingTest extends XOMTestCase {
     
 
     private static boolean charsetAvailable(String name) {
-        // hack to avoid using 1.4 classes
         try {
-            "d".getBytes(name);
-            return true;
-        }
-        catch (UnsupportedEncodingException ex) {
-            return false;   
-        }        
-        
+          Charset.forName(name);
+          return true;
+        } catch (UnsupportedCharsetException ex) {
+          return false;
+        }      
     }
 
        
@@ -268,7 +266,7 @@ public class EncodingTest extends XOMTestCase {
       throws ParsingException, IOException {
         
         Builder builder = new Builder();
-        byte[] data = null;
+        System.gc();
         ByteArrayOutputStream out = new ByteArrayOutputStream(100000);    
         // Write data into a byte array using encoding
         Serializer serializer = new Serializer(out, encoding);
@@ -276,7 +274,7 @@ public class EncodingTest extends XOMTestCase {
         serializer.flush();
         out.flush();
         out.close();
-        data = out.toByteArray();
+        byte[] data = out.toByteArray();
         InputStream in = new ByteArrayInputStream(data);
         Document reparsed = builder.build(in);
         in.close();

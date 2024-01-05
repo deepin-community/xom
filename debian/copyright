@@ -1,26 +1,22 @@
-This package was debianized by Stephan Michels <stephan@apache.org> on
-Sa,  18 Feb 2006 17:04:27 +0200.
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: XOM
+Upstream-Contact: https://github.com/elharo/xom/issues
+Source: https://github.com/elharo/xom
+Files-Excluded:
+ lib
+ lib2
+ jaxen-*-src.zip
+ website/examples/*.class
+Comment: Excluding prebuilt files.
 
-It was downloaded from http://www.xom.nu/
+Files: *
+Copyright: 2004, 2005, 2009, 2010, 2020, Elliotte Rusty Harold <elharo@metalab.unc.edu>
+License: LGPL-2.1
 
-Upstream Author: Elliotte Rusty Harold <elharo@metalab.unc.edu>
+Files: debian/*
+Copyright: 2006, Stephan Michels <stephan@apache.org>
+License: LGPL-2.1
 
-Copyrights: (C) 2004, 2005 Elliotte Rusty Harold
-
-License:
-
-   This library is free software; you can redistribute it and/or modify
-   it under the terms of version 2.1 of the GNU Lesser General Public
-   License as published by the Free Software Foundation.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU Lesser General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this package; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
-
-On Debian systems, the complete text of the GNU Lesser General
-Public License can be found in `/usr/share/common-licenses/LGPL-2.1'.
+License: LGPL-2.1
+ On Debian systems, the complete text of the GNU Lesser General
+ Public License can be found in '/usr/share/common-licenses/LGPL-2.1'.

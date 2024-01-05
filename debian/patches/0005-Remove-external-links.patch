@@ -2,11 +2,11 @@ Description: Remove external links
 Author: Varun Hiremath <varun@debian.org>
 --- a/build.xml
 +++ b/build.xml
-@@ -426,7 +426,6 @@
+@@ -392,7 +392,6 @@
               windowtitle="${Name} ${version}  API"
               docencoding="UTF-8"
               charset="UTF-8"
 -             link="http://www.junit.org/junit/javadoc/3.8.1"
               doctitle="${Name} ${version}"
               bottom="Copyright 2002-${year} &lt;a href='http://www.elharo.com/'&gt;Elliotte Rusty Harold&lt;/a&gt;
- 			 &lt;br /&gt; &lt;a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;elharo%40ibiblio%2Eorg?Subject=XOM'&gt;elharo&#64;ibiblio&#46;org&lt;/a&gt;">
+        &lt;br /&gt; &lt;a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;elharo%40ibiblio%2Eorg?Subject=XOM'&gt;elharo&#64;ibiblio&#46;org&lt;/a&gt;">

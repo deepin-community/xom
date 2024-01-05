@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.xinclude;
@@ -218,7 +218,7 @@ class EncodingHeuristics {
               return "UTF-8";
           }
           // now positioned to read encoding name
-          StringBuffer encodingName = new StringBuffer();
+          StringBuilder encodingName = new StringBuilder();
           while (true) {
               c = declaration.charAt(position++);
               if (c == delimiter) break;

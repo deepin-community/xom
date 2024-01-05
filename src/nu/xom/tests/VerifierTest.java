@@ -1,4 +1,4 @@
-/* Copyright 2002-2005 Elliotte Rusty Harold
+/* Copyright 2002-2005, 2018 Elliotte Rusty Harold
    
    This library is free software; you can redistribute it and/or modify
    it under the terms of version 2.1 of the GNU Lesser General Public 
@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.tests;
@@ -43,7 +43,7 @@ import org.apache.xerces.util.XMLChar;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.1d7
+ * @version 1.2.11
  *
  */
 public class VerifierTest extends XOMTestCase {
@@ -699,7 +699,7 @@ public class VerifierTest extends XOMTestCase {
     
     public void testHostNameTooLong() {
      
-        StringBuffer uri = new StringBuffer("http://");
+    	StringBuilder uri = new StringBuilder("http://");
         for (int i = 0; i < 255; i++) uri.append('c');
         uri.append(".com/");
         Element e = new Element("e");
@@ -955,7 +955,7 @@ public class VerifierTest extends XOMTestCase {
             String url = "http://[" + addresses[i] + "]/";
             try {
                 new DocType("root", url);
-                fail("Allowed illegal IPv6 address: " +  addresses[i] );
+                fail("Allowed illegal IPv6 address: " +  addresses[i]);
             }
             catch (MalformedURIException success) {
                 assertNotNull(success.getMessage());
@@ -975,7 +975,7 @@ public class VerifierTest extends XOMTestCase {
         if (c <= 0xFFFF) return String.valueOf((char) c);
         char high = (char) (LEAD_OFFSET + (c >> 10));
         char low = (char) (0xDC00 + (c & 0x3FF));
-        StringBuffer sb = new StringBuffer(2);
+        StringBuilder sb = new StringBuilder(2);
         sb.append(high);
         sb.append(low);
         return sb.toString().toLowerCase();

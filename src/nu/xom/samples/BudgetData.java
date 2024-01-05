@@ -1,4 +1,4 @@
-/* Copyright 2002, 2003 Elliotte Rusty Harold
+/* Copyright 2002, 2003, 2019 Elliotte Rusty Harold
    
    This library is free software; you can redistribute it and/or modify
    it under the terms of version 2.1 of the GNU Lesser General Public 
@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.samples;
@@ -43,17 +43,17 @@ import java.util.Map;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.0
+ * @version 1.3.1
  *
  */
 public class BudgetData {
 
-  public static List parse(InputStream src) throws IOException {
+  public static List<Map<String, String>> parse(InputStream src) throws IOException {
       
     // The document as published by the OMB is encoded in Latin-1
     InputStreamReader isr = new InputStreamReader(src, "8859_1");
     BufferedReader in = new BufferedReader(isr);
-    List records = new ArrayList();  
+    List<Map<String, String>> records = new ArrayList<Map<String, String>>();  
     String lineItem;
     while ((lineItem = in.readLine()) != null) {
       records.add(splitLine(lineItem));
@@ -83,15 +83,15 @@ public class BudgetData {
     "FY2004", "FY2005", "FY2006" 
    };
 
-  private static Map splitLine(String record) {
+  private static Map<String, String> splitLine(String record) {
      
     record = record.trim();
     
     int index = 0;
-    Map result = new HashMap();
+    Map<String, String> result = new HashMap<String, String>();
     for (int i = 0; i < keys.length; i++) {
       //find the next comma    
-      StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
       char c;
       boolean inString = false;
       while (true) {

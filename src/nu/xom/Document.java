@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom;
@@ -29,7 +29,7 @@ package nu.xom;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.1b5
+ * @version 1.3.0
  * 
  */
 public class Document extends ParentNode {
@@ -410,7 +410,7 @@ public class Document extends ParentNode {
      */
     public final String toXML() {
     
-        StringBuffer result = new StringBuffer(64);
+    	StringBuilder result = new StringBuilder(64);
 
         // XML declaration
         result.append("<?xml version=\"1.0\"?>\n");
@@ -433,7 +433,7 @@ public class Document extends ParentNode {
      * 
      * @return a deep copy of this <code>Document</code> object
      */
-    public Node copy() {
+    public Document copy() {
         return new Document(this);
     }
 

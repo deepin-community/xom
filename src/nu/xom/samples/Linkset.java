@@ -1,4 +1,4 @@
-/* Copyright 2002, 2003 Elliotte Rusty Harold
+/* Copyright 2002, 2003, 2018 Elliotte Rusty Harold
    
    This library is free software; you can redistribute it and/or modify
    it under the terms of version 2.1 of the GNU Lesser General Public 
@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.samples;
@@ -39,7 +39,7 @@ import nu.xom.ParsingException;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.0
+ * @version 1.3.0
  *
  */
 public class Linkset {
@@ -56,8 +56,7 @@ public class Linkset {
       Element oldRoot = document.getRootElement();
       Element newRoot = new Element("linkset");
       Elements toplevel = oldRoot.getChildElements();
-      for (int i = 0; i < toplevel.size(); i++) {
-        Element element = toplevel.get(i); 
+      for (Element element : toplevel) {
         Element link = element.getFirstChildElement("link", 
           "http://my.netscape.com/rdf/simple/0.9/");
         link.detach();

@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.samples;
@@ -139,7 +139,7 @@ public class DatabaseConverter {
             Reader r = clob.getCharacterStream();
             char[] text = new char[1024];
             int numRead;
-            StringBuffer result = new StringBuffer();
+            StringBuilder result = new StringBuilder();
             while ((numRead = r.read(text, 0, 1024)) != -1) {
               result.append(text, 0, numRead); 
             }
@@ -158,7 +158,7 @@ public class DatabaseConverter {
     private Text hexEncode(InputStream in) 
       throws IOException {
     
-        StringBuffer result = new StringBuffer();
+    	StringBuilder result = new StringBuilder();
 
         int octet;
         while ((octet = in.read()) != -1) {

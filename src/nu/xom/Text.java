@@ -16,7 +16,7 @@
    
    You can contact Elliotte Rusty Harold by sending e-mail to
    elharo@ibiblio.org. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom;
@@ -40,7 +40,7 @@ import java.io.UnsupportedEncodingException;
  * </p>
  *
  * @author Elliotte Rusty Harold
- * @version 1.2.7
+ * @version 1.3.0
  *
  */
 public class Text extends Node {
@@ -206,7 +206,7 @@ public class Text extends Node {
      *
      * @return a deep copy of this text node with no parent
      */
-    public Node copy() {
+    public Text copy() {
         
         if (isCDATASection()) {
             return new CDATASection(this);
@@ -240,8 +240,8 @@ public class Text extends Node {
         
         String s = getValue();
         int length = s.length();
-        // Give the string buffer enough room for a couple of escaped characters 
-        StringBuffer result = new StringBuffer(length+12);
+        // Give the string builder enough room for a couple of escaped characters 
+        StringBuilder result = new StringBuilder(length+12);
         for (int i = 0; i < length; i++) {
             char c = s.charAt(i);
             switch (c) {
@@ -437,7 +437,7 @@ public class Text extends Node {
             s = s.substring(0, 35);
         }
         
-        StringBuffer result = new StringBuffer(length);
+        StringBuilder result = new StringBuilder(length);
         for (int i = 0; i < length; i++) {
             char c = s.charAt(i);
             switch (c) {

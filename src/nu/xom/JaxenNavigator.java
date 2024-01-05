@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom;
@@ -284,7 +284,7 @@ class JaxenNavigator extends DefaultNavigator implements NamedAccessNavigator {
             return ((Text) texts.get(0)).getValue();
         }
         else {
-            StringBuffer result = new StringBuffer();
+        	StringBuilder result = new StringBuilder();
             Iterator iterator = texts.iterator();
             while (iterator.hasNext()) {
                 Text text = (Text) iterator.next();

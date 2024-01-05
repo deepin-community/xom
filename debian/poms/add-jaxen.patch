@@ -1,0 +1,15 @@
+Description: Registering missing dependency on jaxen (see #970723).
+Author: Andrius Merkys <merkys@debian.org>
+Forwarded: not-needed
+--- a/debian/poms/xom.pom
++++ b/debian/poms/xom.pom
+@@ -58,5 +58,9 @@
+       <type>jar</type>
+     </dependency>
++    <dependency>
++        <groupId>jaxen</groupId>
++        <artifactId>jaxen</artifactId>
++    </dependency>
+   </dependencies>
+   
+   <build>

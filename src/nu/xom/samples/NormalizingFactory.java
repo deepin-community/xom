@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.samples;
@@ -77,7 +77,7 @@ public class NormalizingFactory extends NodeFactory {
         data = data.replace('\r', ' ');
         data = data.trim();
         
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < data.length(); i++) {
             if (i == 0 || data.charAt(i-1) != ' ' 
               || data.charAt(i) != ' ') {

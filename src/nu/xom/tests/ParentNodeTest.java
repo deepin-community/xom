@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.tests;
@@ -40,7 +40,7 @@ import nu.xom.Text;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.2.3
+ * @version 1.3.0
  *
  */
 public class ParentNodeTest extends XOMTestCase {
@@ -523,7 +523,7 @@ public class ParentNodeTest extends XOMTestCase {
 
     
     // can't remove when insertion is legal;
-    // succeeed or fail as unit
+    // succeed or fail as unit
     public void testReplaceChildAtomicity() {
         
         Element parent = new Element("parent");

@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom;
@@ -32,7 +32,7 @@ package nu.xom;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.0
+ * @version 1.3.0
  * 
  */
 public class Comment extends Node {
@@ -46,7 +46,7 @@ public class Comment extends Node {
      * The data is checked for legality according to XML 1.0 rules. 
      * Illegal characters such as the form feed and null are not
      * allowed. Furthermore, the two hyphen string "--" is not allowed;
-     * and the last character of the comment may not be a hyphen.
+     * and the last character of the comment must not be a hyphen.
      * </p>
      * 
      * @param data the initial text of the comment
@@ -188,7 +188,7 @@ public class Comment extends Node {
      *     that is not part of a document
      * 
      */
-    public Node copy()  {
+    public Comment copy()  {
         return new Comment(data);
     }
 
@@ -204,7 +204,7 @@ public class Comment extends Node {
      *     XML comment
      */
     public final String toXML() {
-        StringBuffer result = new StringBuffer("<!--");
+    	StringBuilder result = new StringBuilder("<!--");
         result.append(data);
         result.append("-->");
         return result.toString();

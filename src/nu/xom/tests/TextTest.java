@@ -15,15 +15,14 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.tests;
 
 import nu.xom.Element;
 import nu.xom.IllegalCharacterDataException;
-import nu.xom.Node;
 import nu.xom.Text;
 
 /**
@@ -33,7 +32,7 @@ import nu.xom.Text;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.2d1
+ * @version 1.3.1
  *
  */
 public class TextTest extends XOMTestCase {
@@ -147,7 +146,7 @@ public class TextTest extends XOMTestCase {
     public void testCopy() {
         
         Text c1 = new Text("test");
-        Text c2 = (Text) c1.copy();
+        Text c2 = c1.copy();
 
         assertEquals(c1.getValue(), c2.getValue());
         assertEquals(c1, c2);
@@ -160,7 +159,7 @@ public class TextTest extends XOMTestCase {
     public void testCopyisNotACDATASection() {
         
         Text c1 = new Text("test");
-        Node c2 = c1.copy();
+        Text c2 = c1.copy();
         assertEquals(Text.class, c2.getClass());
 
     }
@@ -229,7 +228,7 @@ public class TextTest extends XOMTestCase {
     
     public void testNonBMPText() {
         
-        StringBuffer sb = new StringBuffer(2);
+    	StringBuilder sb = new StringBuilder(2);
         for (char high = '\uD800'; high <= '\uDB7F'; high++) {
             for (char low = '\uDC00'; low <= '\uDFFF'; low++) {
                 sb.setLength(0);

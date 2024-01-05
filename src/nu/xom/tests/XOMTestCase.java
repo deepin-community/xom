@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.tests;
@@ -401,13 +401,11 @@ public class XOMTestCase extends TestCase {
 
         int count = expectedCopy.getChildCount();
         assertEquals(message, count, actualCopy.getChildCount());
-        int nonTextNodes = count;
         for (int i = 0; i < count; i++) {
             Node child1 = expectedCopy.getChild(i);
             // could remove this instanceof Test by having combineTextNodes
             // set a list of text indices
             if (child1 instanceof Text) {
-                nonTextNodes--;
                 Node child2 = actualCopy.getChild(i);
                 assertEquals(message, child1, child2);
             }
@@ -441,7 +439,7 @@ public class XOMTestCase extends TestCase {
 
         Element stub = new Element("a");
         Comment stubc = new Comment("c");
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         int count = element.getChildCount();
         for (int i = 0; i < count; i++) {
             Node child = element.getChild(i);

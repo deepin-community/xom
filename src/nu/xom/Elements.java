@@ -15,13 +15,15 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -34,14 +36,14 @@ import java.util.List;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.0
+ * @version 1.3.0
  * 
  *
  */
-public final class Elements {
+public final class Elements implements Iterable<Element> {
 
     
-    private List elements = new ArrayList(1);
+    private List<Element> elements = new ArrayList<Element>(1);
     
     // non-public constructor to prevent instantiation
     Elements() {}
@@ -80,6 +82,11 @@ public final class Elements {
     // Add the specified Element object to the list
     void add(Element element) {
         elements.add(element);
+    }
+
+    @Override
+    public Iterator<Element> iterator() {
+        return Collections.unmodifiableList(elements).iterator();
     }
 
 }

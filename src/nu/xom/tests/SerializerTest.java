@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.tests;
@@ -1529,7 +1529,7 @@ public class SerializerTest extends XOMTestCase {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         Serializer serializer = new Serializer(out);
         serializer.setIndent(100);
-        StringBuffer spaces = new StringBuffer(400);
+        StringBuilder spaces = new StringBuilder(400);
         for (int i = 0; i < 400; i++) spaces.append(' ');
         String _400 = spaces.toString();
         String _300 = spaces.substring(0, 300);

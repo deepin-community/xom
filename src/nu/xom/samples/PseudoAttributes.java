@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.samples;
@@ -47,7 +47,7 @@ public class PseudoAttributes {
     public static Element getAttributes(ProcessingInstruction pi)
       throws ParsingException  {
   
-        StringBuffer sb = new StringBuffer("<");
+    	StringBuilder sb = new StringBuilder("<");
         sb.append(pi.getTarget());
         sb.append(" ");
         sb.append(pi.getValue());

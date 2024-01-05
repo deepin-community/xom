@@ -1,4 +1,4 @@
-/* Copyright 2002-2006, 2009 Elliotte Rusty Harold
+/* Copyright 2002-2006, 2009, 2014 Elliotte Rusty Harold
    
    This library is free software; you can redistribute it and/or modify
    it under the terms of version 2.1 of the GNU Lesser General Public 
@@ -16,15 +16,17 @@
    
    You can contact Elliotte Rusty Harold by sending e-mail to
    elharo@ibiblio.org. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 
 package nu.xom;
 
+import org.xml.sax.SAXException;
+
 /**
  * @author Elliotte Rusty Harold
- * @version 1.2.3
+ * @version 1.2.11
  *
  */
 class NonVerifyingHandler extends XOMHandler {
@@ -35,7 +37,7 @@ class NonVerifyingHandler extends XOMHandler {
   
     
     public void startElement(String namespaceURI, String localName, 
-      String qualifiedName, org.xml.sax.Attributes attributes) {
+      String qualifiedName, org.xml.sax.Attributes attributes) throws SAXException {
         
         flushText();
         Element element = Element.build(qualifiedName, namespaceURI, localName);
@@ -164,8 +166,8 @@ class NonVerifyingHandler extends XOMHandler {
     }
   
     
-    public void processingInstruction(String target, String data) {
-        
+    public void processingInstruction(String target, String data) throws SAXException {
+
         // simplify logic???? into two cases in and not in DTD
         // ditto for comment() method and superclass
         if (!inDTD) flushText();
@@ -199,14 +201,14 @@ class NonVerifyingHandler extends XOMHandler {
         DocType doctype = DocType.build(rootName, publicID, systemID);
         document.fastInsertChild(doctype, position);
         position++;
-        internalDTDSubset = new StringBuffer(); 
+        internalDTDSubset = new StringBuilder(); 
         this.doctype = doctype;
         
     }
     
     
-    public void comment(char[] text, int start, int length) {
-        
+    public void comment(char[] text, int start, int length) throws SAXException {
+
         if (!inDTD) flushText();
         else if (!inInternalSubset()) return;
 

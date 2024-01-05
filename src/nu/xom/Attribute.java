@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom;
@@ -38,7 +38,7 @@ package nu.xom;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.2b2
+ * @version 1.3.0
  * 
  */
 public class Attribute extends Node {
@@ -232,7 +232,7 @@ public class Attribute extends Node {
         s = s.substring(0, end+1);
         
         length = s.length();
-        StringBuffer sb = new StringBuffer(length);
+        StringBuilder sb = new StringBuilder(length);
         boolean wasSpace = false;
         for (int i = 0; i < length; i++) {
             char c = s.charAt(i);
@@ -571,7 +571,7 @@ public class Attribute extends Node {
      * @return a copy of this attribute
      * 
      */ 
-    public Node copy() {
+    public Attribute copy() {
         return new Attribute(this);
     }
 
@@ -586,11 +586,11 @@ public class Attribute extends Node {
      */
     public final String toXML() {
         // It's a common belief that methods like this one should be
-        // implemented using StringBuffers rather than String 
+        // implemented using StringBuilders rather than String 
         // concatenation for maximum performance. However, 
         // disassembling the code shows that today's compilers are 
         // smart enough to figure this out for themselves. The compiled
-        // version of this class only uses a single StringBuffer. No 
+        // version of this class only uses a single StringBuilder. No 
         // benefit would be gained by making the code more opaque here. 
         return getQualifiedName() + "=\"" + escapeText(value) + "\"";    
     }
@@ -618,7 +618,7 @@ public class Attribute extends Node {
         
         int length = s.length();
         // Give the string buffer enough room for a couple of escaped characters 
-        StringBuffer result = new StringBuffer(length+12);
+        StringBuilder result = new StringBuilder(length+12);
         for (int i = 0; i < length; i++) {
             char c = s.charAt(i);
             switch (c) {
@@ -1064,8 +1064,8 @@ public class Attribute extends Node {
          */
          public String toString() {    
              
-            StringBuffer result 
-              = new StringBuffer("[Attribute.Type: ");
+        	StringBuilder result 
+              = new StringBuilder("[Attribute.Type: ");
             result.append(getName()); 
             result.append(']');
             return result.toString();    
