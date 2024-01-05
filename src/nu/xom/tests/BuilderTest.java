@@ -1,4 +1,4 @@
-/* Copyright 2002-2007, 2009, 2010, 2011 Elliotte Rusty Harold
+/* Copyright 2002-2007, 2009, 2010, 2011, 2014, 2018 Elliotte Rusty Harold
    
    This library is free software; you can redistribute it and/or modify
    it under the terms of version 2.1 of the GNU Lesser General Public 
@@ -16,7 +16,7 @@
    
    You can contact Elliotte Rusty Harold by sending e-mail to
    elharo@ibiblio.org. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.tests;
@@ -81,13 +81,13 @@ import nu.xom.XMLException;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.2.7
+ * @version 1.2.11
  *
  */
 public class BuilderTest extends XOMTestCase {
 
     private File inputDir = new File("data");
-
+    
     // This class tests error conditions, which Xerces
     // annoyingly logs to System.err. So we hide System.err 
     // before each test and restore it after each test.
@@ -100,6 +100,7 @@ public class BuilderTest extends XOMTestCase {
     
     protected void tearDown() {
         System.setErr(systemErr);
+        System.gc();
     }
     
        
@@ -746,7 +747,7 @@ public class BuilderTest extends XOMTestCase {
         String data = "<root />";
         
         Document document = builder.build(data, null);
-        WeakReference ref = new WeakReference(document);
+        WeakReference<Document> ref = new WeakReference<Document>(document);
         document = null;
         System.gc();
         System.gc();
@@ -1477,6 +1478,7 @@ public class BuilderTest extends XOMTestCase {
         assertEquals(0xE9, s.charAt(0));
         
     }
+
     
     
     // This tests XOM's workaround for a bug in Crimson, Xerces,
@@ -1522,7 +1524,7 @@ public class BuilderTest extends XOMTestCase {
     
     private String escapePath(String path) throws UnsupportedEncodingException {
         String[] fragments = path.split("/");
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < fragments.length; i++) {
             String encoded = URLEncoder.encode(fragments[i], "UTF-8");
             encoded = encoded.replace("+", "%20");
@@ -3249,9 +3251,9 @@ public class BuilderTest extends XOMTestCase {
               "org.apache.crimson.parser.XMLReaderImpl"
             );
         
-            Class filter = Class.forName("org.apache.xml.resolver.tools.ResolvingXMLFilter");
-            Class[] types = {XMLReader.class};
-            Constructor constructor = filter.getConstructor(types);
+            Class<?> filter = Class.forName("org.apache.xml.resolver.tools.ResolvingXMLFilter");
+            Class<?>[] types = {XMLReader.class};
+            Constructor<?> constructor = filter.getConstructor(types);
             Object[] args = {parser};
             XMLReader reader = (XMLReader) constructor.newInstance(args);
             Builder builder = new Builder(reader);

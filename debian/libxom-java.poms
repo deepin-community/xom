@@ -1,1 +1,1 @@
-debian/poms/xom.pom
+debian/poms/xom.pom --java-lib --artifact=build/xom.jar

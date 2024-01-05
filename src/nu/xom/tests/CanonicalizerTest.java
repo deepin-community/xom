@@ -16,7 +16,7 @@
    
    You can contact Elliotte Rusty Harold by sending e-mail to
    elharo@ibiblio.org. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.tests;
@@ -1377,7 +1377,7 @@ public class CanonicalizerTest extends XOMTestCase {
         System.arraycopy(prologData, 0, data, 0, prologData.length);
         System.arraycopy(epilogData, 0, data, 
           data.length - epilogData.length, epilogData.length);
-        StringBuffer buffer = new StringBuffer(255 - 160 + 1);
+        StringBuilder buffer = new StringBuilder(255 - 160 + 1);
         for (int i = 160; i <= 255; i++) {
             buffer.append((char) i);   
         }

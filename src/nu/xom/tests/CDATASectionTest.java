@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.tests;
@@ -33,7 +33,7 @@ import nu.xom.*;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.1b4
+ * @version 1.3.0
  *
  */
 public class CDATASectionTest extends XOMTestCase {
@@ -63,9 +63,8 @@ public class CDATASectionTest extends XOMTestCase {
     
     public void testCopy() {
         Element child1 = doc.getRootElement().getFirstChildElement("child1");
-        Node cdata = child1.getChild(0);
-        Node copy = cdata.copy();
-        assertTrue(cdata instanceof Text);  
+        Text cdata = (Text) child1.getChild(0);
+        Text copy = cdata.copy();
         assertEquals("nu.xom.CDATASection", copy.getClass().getName());  
         assertEquals("<&>", copy.getValue());  
     }

@@ -1,4 +1,4 @@
-/* Copyright 2005 Elliotte Rusty Harold
+/* Copyright 2005, 2018 Elliotte Rusty Harold
    
    This library is free software; you can redistribute it and/or modify
    it under the terms of version 2.1 of the GNU Lesser General Public 
@@ -15,14 +15,18 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.samples;
 
 import java.io.IOException;
-import nu.xom.*;
+
+import nu.xom.Builder;
+import nu.xom.Document;
+import nu.xom.Node;
+import nu.xom.ParsingException;
 
 /**
  * <p>
@@ -30,7 +34,7 @@ import nu.xom.*;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.1d5
+ * @version 1.3.0
  */
 public class XPathHeadlines {
   
@@ -45,9 +49,8 @@ public class XPathHeadlines {
         try {
           Builder parser = new Builder();
           Document doc = parser.build(url);
-          Nodes titles = doc.query("//title");
-          for (int i = 0; i < titles.size(); i++) {
-            System.out.println(titles.get(i).getValue());
+          for (Node title : doc.query("//title")) {
+            System.out.println(title.getValue());
           }
         }
         catch (ParsingException ex) {

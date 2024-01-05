@@ -1,4 +1,4 @@
-/* Copyright 2002-2006, 2009, 2010, 2013 Elliotte Rusty Harold
+/* Copyright 2002-2006, 2009, 2010, 2013, 2018 Elliotte Rusty Harold
    
    This library is free software; you can redistribute it and/or modify
    it under the terms of version 2.1 of the GNU Lesser General Public 
@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom;
@@ -53,7 +53,7 @@ import org.apache.xerces.impl.Version;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.2.10
+ * @version 1.3.8
  * 
  */
 public class Builder {
@@ -171,7 +171,6 @@ public class Builder {
     // These are stored in the order of preference.
     private static String[] parsers = {
         "nu.xom.XML1_0Parser",
-        "nu.xom.JDK15XML1_0Parser",
         "org.apache.xerces.parsers.SAXParser",
         "org.apache.xerces.jaxp.SAXParserImpl$JAXPSAXParser", // xerces-2.9.x
         "com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser", // JDK 1.6
@@ -201,28 +200,6 @@ public class Builder {
             return parser;
         } 
         catch (SAXException ex) {
-            // look for next one
-        }
-        catch (NoClassDefFoundError err) {
-            // Xerces is not available; look for next one
-        } 
-
-        try {
-            parser = (XMLReader) Class.forName(
-              "nu.xom.JDK15XML1_0Parser").newInstance();
-            setupParser(parser, validate);
-            return parser;
-        } 
-        catch (SAXException ex) {
-            // look for next one
-        }
-        catch (InstantiationException ex) {
-            // look for next one
-        } 
-        catch (ClassNotFoundException ex) {
-            // look for next one
-        }
-        catch (IllegalAccessException ex) {
             // look for next one
         }
         catch (NoClassDefFoundError err) {
@@ -312,7 +289,6 @@ public class Builder {
         
         // A couple of Xerces specific properties
         if (parserName.equals("nu.xom.XML1_0Parser") 
-         || parserName.equals("nu.xom.JDK15XML1_0Parser")
          || parserName.equals("org.apache.xerces.parsers.SAXParser")
          || parserName.equals("com.sun.org.apache.xerces.internal.parsers.SAXParser")
          || parserName.equals("org.apache.xerces.jaxp.SAXParserImpl$JAXPSAXParser") // xerces-2.9.x
@@ -490,7 +466,6 @@ public class Builder {
 
 
     private void setHandlers() {
-        
         XOMHandler handler;
         if ((factory == null 
           || factory.getClass().getName().equals("nu.xom.NodeFactory"))
@@ -505,6 +480,7 @@ public class Builder {
             if (factory == null) factory = new NodeFactory();
             handler = new XOMHandler(factory);
         }
+        
         parser.setContentHandler(handler);
         parser.setDTDHandler(handler);
         
@@ -674,7 +650,7 @@ public class Builder {
         // Java's toURL method doesn't properly escape file
         // names so we have to do it manually
         String absolute = in.getAbsolutePath();
-        StringBuffer url = new StringBuffer(fileURLPrefix);
+        StringBuilder url = new StringBuilder(fileURLPrefix);
         int length = absolute.length();
         char separatorChar = File.separatorChar;
         for (int i = 0; i < length; i++) {
@@ -990,14 +966,14 @@ public class Builder {
                             }
                             catch (IndexOutOfBoundsException ex) {
                                 // file name contains a high half and not a low half
-                                url = new StringBuffer(0);
+                                url = new StringBuilder(0);
                                 break;
                             }
                         }
                         else {
                             // low half not preceded by high half
                             // Can't create a base URI
-                            url = new StringBuffer(0);
+                            url = new StringBuilder(0);
                             break;
                         }
                 }
@@ -1123,7 +1099,7 @@ public class Builder {
             // only if the scheme is file; not in the more common case where
             // it's http
             path = URIUtil.removeDotSegments(path);
-            StringBuffer canonicalForm = new StringBuffer(uri.length()); 
+            StringBuilder canonicalForm = new StringBuilder(uri.length()); 
             canonicalForm.append(scheme);
             canonicalForm.append("://");
             if (authority != null) canonicalForm.append(authority); 

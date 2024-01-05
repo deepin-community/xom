@@ -1,4 +1,4 @@
-/* Copyright 2003 Elliotte Rusty Harold
+/* Copyright 2003, 2019 Elliotte Rusty Harold
    
    This library is free software; you can redistribute it and/or modify
    it under the terms of version 2.1 of the GNU Lesser General Public 
@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.samples;
@@ -40,7 +40,7 @@ import java.util.ArrayList;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.0
+ * @version 1.3.1
  *
  */
 public class DTDGenerator {
@@ -70,7 +70,7 @@ public class DTDGenerator {
  
     private static class NamingNodeFactory extends NodeFactory {
 
-        private List names = new ArrayList();
+        private List<String> names = new ArrayList<String>();
         private String currentElement;
         
         public Element startMakingElement(

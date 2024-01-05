@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.samples;
@@ -150,8 +150,9 @@ public class StreamingExampleExtractor extends NodeFactory {
         File file = new File(dir, fileName);
         System.out.println(file);
         FileOutputStream fout = new FileOutputStream(file);
+        Writer out = null;
         try {
-            Writer out = new OutputStreamWriter(fout, "UTF-8");
+            out = new OutputStreamWriter(fout, "UTF-8");
             // Buffering almost always helps performance a lot
             out = new BufferedWriter(out);
             out.write(code);
@@ -160,6 +161,9 @@ public class StreamingExampleExtractor extends NodeFactory {
         }
         finally {
             fout.close();
+            if (out != null) {
+            	out.close();
+            }
         }
     
     }

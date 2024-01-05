@@ -1,4 +1,4 @@
-/* Copyright 2002-2005 Elliotte Rusty Harold
+/* Copyright 2002-2005, 2019 Elliotte Rusty Harold
    
    This library is free software; you can redistribute it and/or modify
    it under the terms of version 2.1 of the GNU Lesser General Public 
@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom;
@@ -34,7 +34,7 @@ import org.xml.sax.SAXParseException;
  * </p>
 
  * @author Elliotte Rusty Harold
- * @version 1.1b3
+ * @version 1.3.1
  *
  */
 public class ValidityException extends ParsingException {
@@ -42,7 +42,7 @@ public class ValidityException extends ParsingException {
 
     private static final long serialVersionUID = 8950434465665278751L;
     
-    private List saxExceptions = new ArrayList();
+    private List<SAXParseException> saxExceptions = new ArrayList<SAXParseException>();
     private transient Document document;
     
 
@@ -112,6 +112,7 @@ public class ValidityException extends ParsingException {
      * </p>
      * 
      * @param message a string indicating the specific problem
+     * @param uri URL of the document with a validity error
      * @param lineNumber the approximate line number 
      *     where the problem occurs
      * @param columnNumber the approximate column number
@@ -132,6 +133,7 @@ public class ValidityException extends ParsingException {
      * </p>
      * 
      * @param message a string indicating the specific problem
+     * @param uri URL of the document with a validity error
      * @param lineNumber the approximate line number 
      *     where the problem occurs
      * @param columnNumber the approximate column number 

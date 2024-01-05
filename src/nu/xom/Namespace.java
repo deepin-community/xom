@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom;
@@ -34,7 +34,7 @@ package nu.xom;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.1b3
+ * @version 1.3.0
  *
  */
 public final class Namespace extends Node {
@@ -185,7 +185,7 @@ public final class Namespace extends Node {
      * @return a copy of this <code>Namespace</code> 
      *     that is not part of a document
      */
-    public Node copy() {
+    public Namespace copy() {
         return new Namespace(prefix, uri, null);
     }
 

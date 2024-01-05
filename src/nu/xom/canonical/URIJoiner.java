@@ -16,7 +16,7 @@
    
    You can contact Elliotte Rusty Harold by sending e-mail to
    elharo@ibiblio.org. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.canonical;
@@ -114,7 +114,7 @@ class URIJoiner {
     
     static String removeDotSegments(String path) {
     
-        StringBuffer output = new StringBuffer();
+    	StringBuilder output = new StringBuilder();
 
         while (path.length() > 0) {
             if (path.startsWith("/./")) {
@@ -243,7 +243,7 @@ class URIJoiner {
         
         public String toString() {
         
-            StringBuffer result = new StringBuffer(30);
+        	StringBuilder result = new StringBuilder(30);
             
             if (scheme != null) {
                 result.append(scheme);

@@ -1,4 +1,4 @@
-/* Copyright 2002-2004, 2011 Elliotte Rusty Harold
+/* Copyright 2002-2004, 2011, 2018 Elliotte Rusty Harold
    
    This library is free software; you can redistribute it and/or modify
    it under the terms of version 2.1 of the GNU Lesser General Public 
@@ -16,7 +16,7 @@
    
    You can contact Elliotte Rusty Harold by sending e-mail to
    elharo@mibiblio.org. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.tests;
@@ -24,6 +24,7 @@ package nu.xom.tests;
 import java.io.File;
 import java.io.IOException;
 
+import junit.framework.Assert;
 import nu.xom.Attribute;
 import nu.xom.Builder;
 import nu.xom.Comment;
@@ -50,7 +51,7 @@ import nu.xom.Text;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.2.7
+ * @version 1.3.0
  *
  */
 public class ElementTest extends XOMTestCase {
@@ -1227,6 +1228,27 @@ public class ElementTest extends XOMTestCase {
         assertEquals(child5, children.get(1));
         
     }
+    
+    
+    public void testForEach() {
+        
+        Elements children = element.getChildElements();
+        for (Element element : children) {
+            Assert.assertNotNull(element);
+        }
+        
+    }
+    
+    public void testIteratorIsReadOnly() {
+        
+        Elements children = element.getChildElements();
+        try {
+          children.iterator().remove();
+          Assert.fail("removed element");
+        }
+        catch (UnsupportedOperationException ex) {
+        }
+    }
 
     
     public void testAddAttribute() {
@@ -1364,8 +1386,8 @@ public class ElementTest extends XOMTestCase {
         String data = "<b><c1 /><c2 /></b>";
         Builder builder = new Builder();
         Document doc = builder.build(data, "http://www.example.org/");
-        Node root = doc.getRootElement();
-        Node rootcopy = root.copy();
+        Element root = doc.getRootElement();
+        Element rootcopy = root.copy();
         assertEquals(data, rootcopy.toXML());      
     }    
     
@@ -1451,7 +1473,7 @@ public class ElementTest extends XOMTestCase {
         e3.insertChild(e4, 0);
         e.setBaseURI(baseURI);
         
-        Element copy = (Element) e.copy();
+        Element copy = e.copy();
         
         assertEquals(
           e.getNamespaceURI("red"), 

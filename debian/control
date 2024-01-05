@@ -7,17 +7,17 @@ Uploaders:
  Varun Hiremath <varun@debian.org>,
  Emmanuel Bourg <ebourg@apache.org>,
 Build-Depends:
- cdbs,
- debhelper (>= 5),
+ debhelper-compat (= 13),
  maven-repo-helper,
 Build-Depends-Indep:
  ant,
+ ant-optional,
  default-jdk,
- junit (>= 3.8.1),
- libjaxen-java (>= 1.1),
+ junit,
+ libjaxen-java,
  libxalan2-java,
  libxerces2-java,
-Standards-Version: 3.9.4
+Standards-Version: 4.6.1
 Vcs-Git: https://salsa.debian.org/java-team/xom.git
 Vcs-Browser: https://salsa.debian.org/java-team/xom
 Homepage: http://www.xom.nu
@@ -27,7 +27,7 @@ Architecture: all
 Suggests:
  libxom-java-doc,
 Depends:
- libjaxen-java (>= 1.1~beta8),
+ libjaxen-java,
  libxerces2-java,
  ${misc:Depends},
 Description: New XML object model for Java

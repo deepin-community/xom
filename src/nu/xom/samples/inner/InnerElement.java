@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.samples.inner;
@@ -28,9 +28,9 @@ import nu.xom.*;
 public class InnerElement extends Element {
     
     
-    private static ThreadLocal builders = new ThreadLocal() {
+    private static ThreadLocal<Builder> builders = new ThreadLocal<Builder>() {
         
-         protected synchronized Object initialValue() {
+         protected synchronized Builder initialValue() {
              return new Builder(new InnerFactory());
          }
          
@@ -54,7 +54,7 @@ public class InnerElement extends Element {
     
     public String getInnerXML() {
         
-        StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
         for (int i = 0; i < getChildCount(); i++) {
             sb.append(getChild(i).toXML());
         }
@@ -69,21 +69,21 @@ public class InnerElement extends Element {
           + xml + "</fakeRoot>";
         Document doc;
         try {
-            doc = ((Builder) builders.get()).build(xml, null);
+            doc = builders.get().build(xml, null);
         }
         catch (IOException ex) {
             throw new ParsingException(ex.getMessage(), ex);
         }
         this.removeChildren();
         Nodes children = doc.getRootElement().removeChildren();
-        for (int i = 0; i < children.size(); i++) {
-            this.appendChild(children.get(i));
+        for (Node child : children) {
+            this.appendChild(child);
         }
         
     }
 
     
-    public Node copy() {
+    public Element copy() {
         return new InnerElement(this);
     }
     

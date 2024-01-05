@@ -1,4 +1,4 @@
-/* Copyright 2002-2005 Elliotte Rusty Harold
+/* Copyright 2002-2005, 2019 Elliotte Rusty Harold
    
    This library is free software; you can redistribute it and/or modify
    it under the terms of version 2.1 of the GNU Lesser General Public 
@@ -15,13 +15,12 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.jaxen.NamespaceContext;
@@ -53,7 +52,7 @@ import org.jaxen.NamespaceContext;
  * 
  * 
  * @author Elliotte Rusty Harold
- * @version 1.1b4
+ * @version 1.3.1
  *
  */
 public abstract class Node {
@@ -429,7 +428,7 @@ public abstract class Node {
                 connector.setNamespaceContext(namespaces.getJaxenContext());
             }
 
-            List queryResults = connector.selectNodes(this);
+            List<Node> queryResults = connector.selectNodes(this);
             return new Nodes(queryResults);
         }
         catch (XPathException ex) {

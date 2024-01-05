@@ -1,4 +1,4 @@
-/* Copyright 2002-2006, 2009 Elliotte Rusty Harold
+/* Copyright 2002-2006, 2009, 2014, 2018, 2020 Elliotte Rusty Harold
    
    This library is free software; you can redistribute it and/or modify
    it under the terms of version 2.1 of the GNU Lesser General Public 
@@ -16,7 +16,7 @@
    
    You can contact Elliotte Rusty Harold by sending e-mail to
    elharo@ibiblio.org. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 
@@ -27,12 +27,13 @@ import java.util.ArrayList;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
 import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
 import org.xml.sax.ext.DeclHandler;
 import org.xml.sax.ext.LexicalHandler;
 
 /**
  * @author Elliotte Rusty Harold
- * @version 1.2.3
+ * @version 1.3.3
  *
  */
 class XOMHandler 
@@ -46,17 +47,17 @@ class XOMHandler
     // method and may be null if we've skipped it (makeElement
     // returned null.) If we didn't skip it, then parent and
     // current should be the same node.
-    protected ParentNode   parent;
-    protected ParentNode   current;
-    protected ArrayList    parents;
-    protected boolean      inProlog;
-    protected boolean      inDTD;
-    protected int          position; // current number of items in prolog
-    protected Locator      locator; 
-    protected DocType      doctype;
-    protected StringBuffer internalDTDSubset;
-    protected NodeFactory  factory;
-              boolean      usingCrimson = false;
+    protected ParentNode    parent;
+    protected ParentNode    current;
+    protected ArrayList<ParentNode> parents;
+    protected boolean       inProlog;
+    protected boolean       inDTD;
+    protected int           position; // current number of items in prolog
+    protected Locator       locator; 
+    protected DocType       doctype;
+    protected StringBuilder internalDTDSubset;
+    protected NodeFactory   factory;
+              boolean       usingCrimson = false;
     
     
     XOMHandler(NodeFactory factory) {
@@ -94,7 +95,7 @@ class XOMHandler
         document = factory.startMakingDocument();
         parent = document;
         current = document;
-        parents = new ArrayList();
+        parents = new ArrayList<ParentNode>();
         parents.add(document);
         inProlog = true;
         position = 0;
@@ -120,8 +121,8 @@ class XOMHandler
   
     
     public void startElement(String namespaceURI, String localName, 
-      String qualifiedName, org.xml.sax.Attributes attributes) {
-        
+      String qualifiedName, org.xml.sax.Attributes attributes) throws SAXException {
+
         flushText();
         Element element;
         if (parent != document) {
@@ -223,7 +224,7 @@ class XOMHandler
         
     }
 
-    
+
     public void endElement(
       String namespaceURI, String localName, String qualifiedName) {
         
@@ -320,21 +321,20 @@ class XOMHandler
   
     
     protected String textString = null;
-    protected StringBuffer buffer = null;
+    protected StringBuilder buffer = null;
   
-    public void characters(char[] text, int start, int length) {
-        
+    public void characters(char[] text, int start, int length) throws SAXException {
         if (length <= 0) return;
         if (textString == null) textString = new String(text, start, length);
         else {
-            if (buffer == null) buffer = new StringBuffer(textString);
+            if (buffer == null) buffer = new StringBuilder(textString);
             buffer.append(text, start, length);
         }
         if (finishedCDATA) inCDATA = false;
         
     }
- 
-    
+
+
     // accumulate all text that's in the buffer into a text node
     private void flushText() {
         
@@ -369,13 +369,13 @@ class XOMHandler
   
     
     public void ignorableWhitespace(
-      char[] text, int start, int length) {
+      char[] text, int start, int length) throws SAXException {
         characters(text, start, length);
     }
   
     
-    public void processingInstruction(String target, String data) {
-        
+    public void processingInstruction(String target, String data) throws SAXException {
+              
         if (!inDTD) flushText();
         if (inDTD && !inInternalSubset()) return;
         Nodes result = factory.makeProcessingInstruction(target, data);
@@ -428,8 +428,8 @@ class XOMHandler
     
     // LexicalHandler events
     public void startDTD(String rootName, String publicID, 
-      String systemID) {
-        
+      String systemID) throws SAXException {
+      
         inDTD = true;
         Nodes result = factory.makeDocType(rootName, publicID, systemID);
         for (int i = 0; i < result.size(); i++) {
@@ -438,14 +438,14 @@ class XOMHandler
             position++;
             if (node.isDocType()) {
                 DocType doctype = (DocType) node;
-                internalDTDSubset = new StringBuffer(); 
+                internalDTDSubset = new StringBuilder(); 
                 this.doctype = doctype;
             }
         }
         
     }
-     
-    
+
+
     public void endDTD() {
         
         inDTD = false;
@@ -474,6 +474,7 @@ class XOMHandler
     
     protected boolean inCDATA = false;
     protected boolean finishedCDATA = false;
+
     
     public void startCDATA() {
         if (textString == null) inCDATA = true;
@@ -486,8 +487,8 @@ class XOMHandler
     }
 
     
-    public void comment(char[] text, int start, int length) {
-        
+    public void comment(char[] text, int start, int length) throws SAXException {
+    
         if (!inDTD) flushText();
         if (inDTD && !inInternalSubset()) return;
 
@@ -726,7 +727,7 @@ class XOMHandler
     private static String escapeReservedCharactersInDeclarations(String s) {
         
         int length = s.length();
-        StringBuffer result = new StringBuffer(length);
+        StringBuilder result = new StringBuilder(length);
         for (int i = 0; i < length; i++) {
             char c = s.charAt(i);
             switch (c) {
@@ -821,7 +822,7 @@ class XOMHandler
     private static String escapeReservedCharactersInDefaultAttributeValues(String s) {
         
         int length = s.length();
-        StringBuffer result = new StringBuffer(length);
+        StringBuilder result = new StringBuilder(length);
         for (int i = 0; i < length; i++) {
             char c = s.charAt(i);
             switch (c) {

@@ -1,37 +1,26 @@
 #!/usr/bin/make -f
 
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/ant.mk
+include /usr/share/dpkg/pkg-info.mk
 
-JAVA_HOME		:= /usr/lib/jvm/default-java
-DEB_JARS		:= xercesImpl xalan xml-apis jaxen saxpath junit
-DEB_ANT_BUILD_TARGET	:= jar samples javadoc
-PACKAGE                 := xom
-MAVEN_REPO              := http://repo1.maven.org/maven2
+DEB_VERSION_ORIG = $(shell echo ${DEB_VERSION_UPSTREAM} | cut -d + -f 1)
 
-clean::
-	-find -name '*.class' | xargs $(RM)
-	-rm build/xom-samples-$(DEB_UPSTREAM_VERSION).jar
-	mh_clean
+%:
+	dh $@ --buildsystem ant --with maven_repo_helper
 
-install/libxom-java:: 
-	mh_installpoms -plib$(PACKAGE)-java
-	mh_installjar -plib$(PACKAGE)-java -l debian/poms/$(PACKAGE).pom build/$(PACKAGE)-$(DEB_UPSTREAM_VERSION).jar 
+override_dh_auto_build:
+	grep --silent --fixed-strings ${DEB_VERSION_ORIG} debian/poms/xom.pom # ensure POM is up-to-date
+	dh_auto_build -- jar samples javadoc
+	cp build/xom-$(DEB_VERSION_ORIG).jar build/xom.jar
+	cp build/xom-samples.jar build/xom-samples-$(DEB_VERSION_ORIG).jar
 
-install/libxom-java-doc::
-	cp build/xom-samples.jar build/xom-samples-$(DEB_UPSTREAM_VERSION).jar
-	dh_install -plibxom-java-doc build/xom-samples-$(DEB_UPSTREAM_VERSION).jar /usr/share/java/
-	#dh_link -plibxom-java-doc /usr/share/java/xom-samples-$(DEB_UPSTREAM_VERSION).jar /usr/share/java/xom-samples.jar
-	dh_installdocs -plibxom-java-doc build/apidocs
-
-get-orig-source:
-	-uscan --upstream-version 0 --rename	
+override_dh_auto_test:
+	dh_auto_build -- test
 
 get-orig-pom:
 	mkdir -p debian/poms
-	wget  -U NoSuchBrowser/1.0 -O debian/poms/$(PACKAGE).pom \
-		$(MAVEN_REPO)/xom/$(PACKAGE)/$(DEB_UPSTREAM_VERSION)/$(PACKAGE)-$(DEB_UPSTREAM_VERSION).pom
+	wget -U 'debian/rules of xom Debian package' -O debian/poms/xom.pom \
+		https://repo1.maven.org/maven2/xom/xom/$(DEB_VERSION_ORIG)/xom-$(DEB_VERSION_ORIG).pom
+	patch debian/poms/xom.pom debian/poms/add-jaxen.patch
 
 
-
-DEB_PHONY_RULES += get-orig-source get-orig-pom
+DEB_PHONY_RULES += get-orig-pom

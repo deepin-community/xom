@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.xslt;
@@ -69,7 +69,7 @@ import nu.xom.XMLException;
  *   <li>Saxon 6.x: 
  *    <code>com.icl.saxon.TransformerFactoryImpl</code>
  *   </li>
- *   <li>Saxon 7.x and 8.x: 
+ *   <li>Saxon 7.x through 9.x: 
  *    <code>net.sf.saxon.TransformerFactoryImpl</code>
  *   </li>
  *   <li>Xalan interpretive: 
@@ -84,7 +84,7 @@ import nu.xom.XMLException;
  *   <li>Oracle: 
  *    <code>oracle.xml.jaxp.JXSAXTransformerFactory</code>
  *   </li>
- *   <li>Java 1.5 bundled Xalan: 
+ *   <li>Java bundled Xalan: 
  *    <code>com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl</code>
  *   </li>
  *  </ul>
@@ -94,11 +94,11 @@ import nu.xom.XMLException;
  *   <ol>
  *   <li>The most recent value specified by invoking 
  *   <code>System.setProperty("javax.xml.transform.TransformerFactory", 
- *   "<i><code>classname</code></i>")</code></li>
+ *   "<i>classname</i>")</code></li>
  *   <li>The value specified at the command line using the 
  * <samp>-Djavax.xml.transform.TransformerFactory=<i>classname</i></samp>
  *      option to the <b>java</b> interpreter</li>
- *    <li>The class named in the  <code>lib/jaxp.properties</code> 
+ *    <li>The class named in the <code>lib/jaxp.properties</code> 
  *       properties file in the JRE directory, in a line like this one:
  * <pre>javax.xml.transform.TransformerFactory=<i>classname</i></pre>
  *    </li>
@@ -106,17 +106,13 @@ import nu.xom.XMLException;
  * <code>META-INF/services/javax.xml.transform.TransformerFactory</code>
  *   file in the JAR archives available to the runtime</li>
  *   <li>Finally, if all of the above options fail,
- *    a default implementation is chosen. In Sun's JDK 1.4.0 and 1.4.1,
- *    this is Xalan 2.2d10. In JDK 1.4.2, this is Xalan 2.4. 
- *    In JDK 1.4.2_02, this is Xalan 2.4.1.
- *    In JDK 1.4.2_03, 1.5 beta 2, and 1.5 RC1 this is Xalan 2.5.2. 
- *    In JDK 1.4.2_05, this is Xalan 2.4.1. (Yes, Sun appears to have
- *    reverted to 2.4.1 in 1.4.2_05.)
+ *    a default implementation is chosen. In Sun's JDK this is 
+ *    usually com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl.
  *    </li>
  *    </ol>
  *
  * @author Elliotte Rusty Harold
- * @version 1.2b2
+ * @version 1.2.11
  */
 public final class XSLTransform {
 
@@ -130,7 +126,7 @@ public final class XSLTransform {
      */
     private Templates   templates;  
     private NodeFactory factory;
-    private Map         parameters = new HashMap();
+    private Map<String, Object> parameters = new HashMap<String, Object>();
     private static ErrorListener errorsAreFatal = new FatalListener();
     
     
@@ -359,9 +355,9 @@ public final class XSLTransform {
             transformer.setOutputProperty(OutputKeys.METHOD, "xml");
             // work around a Xalan 2.7.0 bug
             transformer.setErrorListener(errorsAreFatal);
-            Iterator iterator = parameters.keySet().iterator();
+            Iterator<String> iterator = parameters.keySet().iterator();
             while (iterator.hasNext()) {
-                String key = (String) iterator.next();
+                String key = iterator.next();
                 Object value = parameters.get(key);
                 transformer.setParameter(key, value);
             }

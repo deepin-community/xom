@@ -1,3 +1,49 @@
+xom (1.3.8-1) unstable; urgency=medium
+
+  [ Emmanuel Bourg ]
+  * New upstream release
+    - Refreshed the patches
+    - Updated the Maven pom
+  * Standards-Version updated to 4.6.1
+
+  [ Debian Janitor ]
+  * Remove constraints unnecessary since buster (oldstable)
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Mon, 05 Dec 2022 14:17:14 +0100
+
+xom (1.3.7+ds-3) unstable; urgency=medium
+
+  * Team upload.
+  * Upload to unstable.
+  * Ensuring the downloaded POM is up to date.
+
+ -- Andrius Merkys <merkys@debian.org>  Tue, 11 Jan 2022 09:46:54 -0500
+
+xom (1.3.7+ds-2) experimental; urgency=medium
+
+  * Team upload.
+  * Fixing resurfaced #970723.
+
+ -- Andrius Merkys <merkys@debian.org>  Fri, 07 Jan 2022 02:15:40 -0500
+
+xom (1.3.7+ds-1) experimental; urgency=medium
+
+  * Team upload.
+  * New upstream release (Closes: #970721)
+  * Rewriting debian/copyright into machine-readable format.
+  * Refreshing and cleaning up patches.
+  * Dropping debian/orig-tar.sh in favor of Files-Excluded.
+  * Bumping debhelper compat level to 13.
+
+ -- Andrius Merkys <merkys@debian.org>  Tue, 04 Jan 2022 02:24:58 -0500
+
+xom (1.2.10-3) unstable; urgency=medium
+
+  * Team upload.
+  * Bumping debhelper compat level to 7 (Closes: #965902)
+
+ -- Andrius Merkys <merkys@debian.org>  Fri, 24 Dec 2021 01:53:25 -0500
+
 xom (1.2.10-2) unstable; urgency=medium
 
   * Team upload.

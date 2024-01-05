@@ -16,7 +16,7 @@
    
    You can contact Elliotte Rusty Harold by sending e-mail to
    elharo@ibiblio.org. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.tests;
@@ -40,7 +40,7 @@ import nu.xom.ParsingException;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.2.7
+ * @version 1.3.0
  *
  */
 public class AttributeTest extends XOMTestCase {
@@ -457,7 +457,19 @@ public class AttributeTest extends XOMTestCase {
         assertEquals(c1.getValue(), c2.getValue());
         assertFalse(c1.equals(c2));
         assertNull(c2.getParent());
+    }
+    
+    
+    public void testCopy() {
+        Attribute a1 = new Attribute("test", "data");
+        Attribute a2 = a1.copy();
 
+        assertEquals(a1.getValue(), a2.getValue());
+        assertEquals(a1.getLocalName(), a2.getLocalName());
+        assertEquals(a1.getQualifiedName(), a2.getQualifiedName());
+        assertEquals(a1.getValue(), a2.getValue());
+        assertFalse(a1.equals(a2));
+        assertNull(a2.getParent());
     }
 
     

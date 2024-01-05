@@ -1,4 +1,4 @@
-/* Copyright 2002-2005 Elliotte Rusty Harold
+/* Copyright 2002-2005, 2019 Elliotte Rusty Harold
    
    This library is free software; you can redistribute it and/or modify
    it under the terms of version 2.1 of the GNU Lesser General Public 
@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.xslt;
@@ -50,23 +50,23 @@ import org.xml.sax.helpers.AttributesImpl;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.2b1
+ * @version 1.3.1
  *
  */
 class XSLTHandler 
   implements ContentHandler, LexicalHandler {
 
     private final Nodes       result;
-    private final ArrayList   parents;
+    private final ArrayList<Element>   parents;
     private final NodeFactory factory;
-    private StringBuffer buffer;
+    private StringBuilder buffer;
     
     
     XSLTHandler(NodeFactory factory) {
         this.factory = factory; 
         result   = new Nodes();
-        parents  = new ArrayList();
-        buffer   = new StringBuffer();
+        parents  = new ArrayList<Element>();
+        buffer   = new StringBuilder();
     }   
     
     
@@ -256,7 +256,7 @@ class XSLTHandler
         if (buffer.length() > 0) {
             Nodes text = factory.makeText(buffer.toString());
             addToResultTree(text);
-            buffer = new StringBuffer();
+            buffer = new StringBuilder();
         } 
     }
   

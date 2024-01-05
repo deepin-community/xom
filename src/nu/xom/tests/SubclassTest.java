@@ -1,4 +1,4 @@
-/* Copyright 2003, 2004 Elliotte Rusty Harold
+/* Copyright 2003, 2004, 2019 Elliotte Rusty Harold
    
    This library is free software; you can redistribute it and/or modify
    it under the terms of version 2.1 of the GNU Lesser General Public 
@@ -15,8 +15,8 @@
    Boston, MA 02111-1307  USA
    
    You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
+   elharo@ibiblio.org. Please include the word "XOM" in the
+   subject line. The XOM home page is located at https://xom.nu/
 */
 
 package nu.xom.tests;
@@ -26,7 +26,6 @@ import nu.xom.Comment;
 import nu.xom.DocType;
 import nu.xom.Document;
 import nu.xom.Element;
-import nu.xom.Node;
 import nu.xom.ProcessingInstruction;
 import nu.xom.Text;
 
@@ -38,7 +37,7 @@ import nu.xom.Text;
  * </p>
  * 
  * @author Elliotte Rusty Harold
- * @version 1.0
+ * @version 1.3.0
  *
  */
 public class SubclassTest extends XOMTestCase {
@@ -72,7 +71,7 @@ public class SubclassTest extends XOMTestCase {
             super(name, value);   
         }
         
-        public Node copy() {
+        public Attribute copy() {
             return new AttributeSubclass(this.getQualifiedName(), this.getValue());   
         }
         
@@ -93,7 +92,7 @@ public class SubclassTest extends XOMTestCase {
             super(value);   
         }
         
-        public Node copy() {
+        public Text copy() {
             return new TextSubclass(this.getValue());   
         }        
     } 
@@ -134,7 +133,7 @@ public class SubclassTest extends XOMTestCase {
             super(value);   
         }
         
-        public Node copy() {
+        public Comment copy() {
             return new CommentSubclass(this.getValue());   
         }
         
@@ -147,7 +146,7 @@ public class SubclassTest extends XOMTestCase {
             super(name);   
         }
 
-        public Node copy() {
+        public DocType copy() {
             return new DocTypeSubclass(this.getRootElementName());   
         }        
     } 
@@ -167,7 +166,7 @@ public class SubclassTest extends XOMTestCase {
             super(target, data);   
         }
         
-        public Node copy() {
+        public ProcessingInstructionSubclass copy() {
             return new ProcessingInstructionSubclass(this.getTarget(), this.getValue());   
         }
         
